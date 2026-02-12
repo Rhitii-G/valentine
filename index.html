@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    background: linear-gradient(135deg,#ff6a88,#ff99ac);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    position:relative;
+}
+
+/* Floating text */
+.floating{
+    position:absolute;
+    top:10%;
+    left:10%;
+    color:white;
+    font-size:18px;
+    opacity:0.8;
+    animation: float 6s ease-in-out infinite alternate;
+}
+
+@keyframes float{
+    from{ transform: translate(0,0);}
+    to{ transform: translate(200px,150px);}
+}
+
+.card{
+    background: rgba(255,255,255,0.2);
+    padding:50px 40px;
+    border-radius:20px;
+    text-align:center;
+    color:white;
+    width:686px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.2);
+    position:relative;
+}
+
+h1{
+    margin-bottom:40px;
+}
+
+.buttons{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+/* YES BUTTON */
+#yesBtn{
+    padding:12px 35px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    background:#ff2e63;
+    color:white;
+    cursor:pointer;
+}
+
+/* NO BUTTON */
+#noBtn{
+    padding:12px 35px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#ff2e63;
+    cursor:pointer;
+    position:absolute;
+    left:200px; /* initial beside Yes */
+    top:0;
+    transition:0.2s ease;
+}
+
+.message{
+    margin-top:30px;
+    font-size:22px;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Will You Be My Valentine? 💖</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 😍</button>
+        <button id="noBtn">No 😢</button>
+    </div>
+
+    <div class="message" id="message">
+        From today… it’s us. And I promise to make you smile every single day 💞✨
+    </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+
+let escaped = false;
+
+function moveNoButton() {
+
+    if (!escaped) {
+        // Get current position
+        const rect = noBtn.getBoundingClientRect();
+
+        // Move button to body so it’s not restricted by card
+        document.body.appendChild(noBtn);
+
+        noBtn.style.position = "fixed";
+        noBtn.style.left = rect.left + "px";
+        noBtn.style.top = rect.top + "px";
+        noBtn.style.zIndex = "9999";
+
+        escaped = true;
+    }
+
+    const padding = 10;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
+
+    const randomX = Math.random() * (screenWidth - btnWidth - padding);
+    const randomY = Math.random() * (screenHeight - btnHeight - padding);
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    moveNoButton();
+});
+
+yesBtn.addEventListener("click", function(){
+    message.style.display = "block";
+});
+</script>
+
+
+</body>
+</html>
